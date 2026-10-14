@@ -1,10 +1,7 @@
 
 # Individual Identification of Tigers
 
-**Minor Project — Department of Electronics & Computer Engineering**  
-**Pulchowk Campus, Tribhuvan University**  
-**Students:** Avinav Panta (PUL079BEI011) · Raj Sujakhu (PUL079BEI028) · Suraj Khanal (PUL079BEI047)
-
+**Minor Project — Department of Electronics & Telecommunication**  
 ---
 
 ## Overview
@@ -78,8 +75,8 @@ minor/
 ## Setup
 
 ```bash
-git clone https://github.com/suraaj8848/Individual-Identification-of-Tiger.git
-cd Individual-Identification-of-Tiger
+git clone https://github.com/Adityathere06/Wild-ID.git
+cd Wild-ID
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
