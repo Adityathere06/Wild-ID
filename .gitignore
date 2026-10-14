@@ -1,0 +1,21 @@
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Large model/data files
+*.pth
+
+# Runtime outputs
+results/
+
+# Temp files
+temp_query.jpg
+*.jpg
+*.png
+
+# Misc
+.DS_Store
