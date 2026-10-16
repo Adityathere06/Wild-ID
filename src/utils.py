@@ -20,7 +20,7 @@ def load_images_from_directory(directory):
 def save_features(features_dict, filepath):
     with open(filepath, 'wb') as f:
         pickle.dump(features_dict, f)
-    print(f"✓ Features saved to {filepath}")
+    print(f"[OK] Features saved to {filepath}")
 
 def load_features(filepath):
     if not os.path.exists(filepath):
@@ -29,7 +29,7 @@ def load_features(filepath):
 
     with open(filepath, 'rb') as f:
         features_dict = pickle.load(f)
-    print(f"✓ Features loaded from {filepath}")
+    print(f"[OK] Features loaded from {filepath}")
     return features_dict
 
 def parse_reference_structure(reference_dir):
