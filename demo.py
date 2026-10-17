@@ -554,228 +554,478 @@ def batch_identify(test_dir='data/test'):
 
 # ── CSS ───────────────────────────────────────────────────────────────────────
 css = """
-footer { display: none !important; }
-.built-with { display: none !important; }
-#svelte-announcer { display: none !important; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ── Reset & Base ────────────────────────────────────── */
+footer, .built-with, #svelte-announcer,
 .gradio-container > .footer { display: none !important; }
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+:root {
+    --bg-primary: #09090b;
+    --bg-secondary: #111113;
+    --bg-card: #16161a;
+    --bg-elevated: #1c1c21;
+    --border-subtle: #27272a;
+    --border-default: #3f3f46;
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --accent: #f59e0b;
+    --accent-hover: #fbbf24;
+    --accent-subtle: rgba(245, 158, 11, 0.08);
+    --accent-glow: rgba(245, 158, 11, 0.15);
+    --danger: #ef4444;
+    --success: #22c55e;
+    --radius: 12px;
+    --radius-sm: 8px;
+}
 
 body, .gradio-container {
-    font-family: 'IBM Plex Sans', sans-serif !important;
-    background: #0e0e0e !important;
-    color: #d4d4d4 !important;
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
 }
 
-.header-block {
-    border-bottom: 1px solid #2a2a2a;
-    padding: 2rem 0 1.5rem 0;
-    margin-bottom: 1rem;
+/* ── Animated Header ─────────────────────────────────── */
+.hero-header {
+    position: relative;
+    padding: 2.5rem 2rem 2rem 2rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    overflow: hidden;
 }
 
-.header-block h1 {
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 1.3rem !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.12em !important;
-    color: #e8e8e8 !important;
-    text-transform: uppercase !important;
-    margin: 0 !important;
+.hero-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(245, 158, 11, 0.06) 0%,
+        rgba(245, 158, 11, 0.02) 30%,
+        transparent 60%,
+        rgba(245, 158, 11, 0.04) 100%);
+    animation: headerShimmer 8s ease-in-out infinite;
 }
 
-.tab-nav button {
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.72rem !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-    color: #555 !important;
-    background: transparent !important;
-    border: none !important;
-    border-bottom: 2px solid transparent !important;
-    padding: 0.6rem 1.2rem !important;
-    transition: color 0.2s, border-color 0.2s !important;
+@keyframes headerShimmer {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
 }
 
-.tab-nav button.selected {
-    color: #d4d4d4 !important;
-    border-bottom: 2px solid #d4d4d4 !important;
+.hero-header .logo-icon {
+    font-size: 2.8rem;
+    display: inline-block;
+    animation: tigerPulse 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.3));
 }
 
-.tab-nav button:hover { color: #999 !important; }
-
-button.primary {
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-    background: #1e1e1e !important;
-    color: #d4d4d4 !important;
-    border: 1px solid #333 !important;
-    border-radius: 2px !important;
-    padding: 0.6rem 1.4rem !important;
-    transition: background 0.2s, border-color 0.2s !important;
-    cursor: pointer !important;
+@keyframes tigerPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
 }
 
-button.primary:hover {
-    background: #2a2a2a !important;
-    border-color: #555 !important;
+.hero-header h1 {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    color: var(--text-primary) !important;
+    margin: 0.6rem 0 0.3rem 0 !important;
+    text-transform: uppercase;
 }
 
-button.secondary {
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.72rem !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-    background: transparent !important;
-    color: #666 !important;
-    border: 1px solid #252525 !important;
-    border-radius: 2px !important;
-    padding: 0.6rem 1.4rem !important;
-    transition: all 0.2s !important;
-    cursor: pointer !important;
+.hero-header .subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    font-weight: 400;
 }
 
-button.secondary:hover {
-    color: #aaa !important;
-    border-color: #3a3a3a !important;
-}
-
-textarea, .gr-textbox textarea {
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.78rem !important;
-    background: #141414 !important;
-    border: 1px solid #222 !important;
-    border-radius: 2px !important;
-    color: #b0b0b0 !important;
-    line-height: 1.7 !important;
-}
-
-input[type="text"], .gr-textbox input {
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.78rem !important;
-    background: #141414 !important;
-    border: 1px solid #222 !important;
-    border-radius: 2px !important;
-    color: #b0b0b0 !important;
-}
-
-label span, .gr-form label {
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.68rem !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-    color: #555 !important;
-}
-
-.gr-image {
-    border: 1px solid #222 !important;
-    border-radius: 2px !important;
-    background: #141414 !important;
-}
-
-.gr-gallery {
-    background: #141414 !important;
-    border: 1px solid #222 !important;
-    border-radius: 2px !important;
-}
-
-.new-tiger-panel {
-    border: 1px solid #2a2a2a;
-    border-left: 3px solid #444;
-    background: #111;
-    padding: 1rem 1.2rem 0.5rem 1.2rem;
-    margin-top: 1rem;
+.hero-header .accent-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin: 1rem auto 0 auto;
     border-radius: 2px;
 }
 
-.new-tiger-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.68rem;
-    color: #555;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin: 0 0 0.8rem 0;
+/* ── Tab Navigation ──────────────────────────────────── */
+.tab-nav {
+    background: var(--bg-secondary) !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius) var(--radius) 0 0 !important;
+    padding: 0 0.5rem !important;
+    gap: 0 !important;
 }
 
-.gr-markdown h2, .gr-markdown h3, .gr-markdown h4 {
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.8rem !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-    color: #888 !important;
+.tab-nav button {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.72rem !important;
     font-weight: 500 !important;
-    border-bottom: 1px solid #1e1e1e !important;
-    padding-bottom: 0.4rem !important;
-    margin-top: 1.4rem !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: var(--text-muted) !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    padding: 0.85rem 1.3rem !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+}
+
+.tab-nav button:hover {
+    color: var(--text-secondary) !important;
+    background: var(--accent-subtle) !important;
+}
+
+.tab-nav button.selected {
+    color: var(--accent) !important;
+    border-bottom: 2px solid var(--accent) !important;
+    background: var(--accent-subtle) !important;
+}
+
+/* ── Primary Button ──────────────────────────────────── */
+button.primary {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    background: linear-gradient(135deg, var(--accent), #d97706) !important;
+    color: #000 !important;
+    border: none !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 0.75rem 1.8rem !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.15),
+                0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+button.primary:hover {
+    background: linear-gradient(135deg, var(--accent-hover), #e6a117) !important;
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.25),
+                0 6px 20px rgba(0, 0, 0, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+button.primary:active {
+    transform: translateY(0) !important;
+}
+
+/* ── Secondary Button ────────────────────────────────── */
+button.secondary {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.72rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    background: var(--bg-elevated) !important;
+    color: var(--text-secondary) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 0.7rem 1.5rem !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+button.secondary:hover {
+    background: var(--bg-card) !important;
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.08) !important;
+}
+
+/* ── Text Areas & Inputs ─────────────────────────────── */
+textarea, .gr-textbox textarea {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.78rem !important;
+    background: var(--bg-primary) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius-sm) !important;
+    color: var(--text-secondary) !important;
+    line-height: 1.8 !important;
+    padding: 1rem !important;
+    transition: border-color 0.3s !important;
+}
+
+textarea:focus, .gr-textbox textarea:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px var(--accent-subtle) !important;
+    outline: none !important;
+}
+
+input[type="text"], .gr-textbox input {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.78rem !important;
+    background: var(--bg-primary) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius-sm) !important;
+    color: var(--text-secondary) !important;
+    padding: 0.6rem 0.9rem !important;
+    transition: border-color 0.3s !important;
+}
+
+input[type="text"]:focus, .gr-textbox input:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px var(--accent-subtle) !important;
+    outline: none !important;
+}
+
+/* ── Labels ──────────────────────────────────────────── */
+label span, .gr-form label {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.68rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: var(--text-muted) !important;
+}
+
+/* ── Image Panels ────────────────────────────────────── */
+.gr-image, .gr-gallery {
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius) !important;
+    background: var(--bg-secondary) !important;
+    overflow: hidden !important;
+    transition: border-color 0.3s !important;
+}
+
+.gr-image:hover, .gr-gallery:hover {
+    border-color: var(--border-default) !important;
+}
+
+/* ── Section Panels ──────────────────────────────────── */
+.section-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin: 0.8rem 0;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.section-panel:hover {
+    border-color: var(--border-default);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Info Note ───────────────────────────────────────── */
+.info-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    background: var(--accent-subtle);
+    border-left: 3px solid var(--accent);
+    padding: 0.6rem 1rem;
+    margin: 0.5rem 0 1.2rem 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* ── Divider ─────────────────────────────────────────── */
+.divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 1.2rem 0;
+}
+
+/* ── Markdown ────────────────────────────────────────── */
+.gr-markdown h2, .gr-markdown h3, .gr-markdown h4 {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    padding-bottom: 0.5rem !important;
+    margin-top: 1.2rem !important;
 }
 
 .gr-markdown p, .gr-markdown li {
-    font-size: 0.82rem !important;
-    color: #666 !important;
+    font-size: 0.84rem !important;
+    color: var(--text-secondary) !important;
     line-height: 1.8 !important;
 }
 
-.gr-markdown code, .gr-markdown pre {
-    font-family: 'IBM Plex Mono', monospace !important;
+.gr-markdown code {
+    font-family: 'JetBrains Mono', monospace !important;
     font-size: 0.74rem !important;
-    background: #141414 !important;
-    border: 1px solid #222 !important;
-    color: #888 !important;
-    border-radius: 2px !important;
+    background: var(--bg-elevated) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--accent) !important;
+    border-radius: 4px !important;
+    padding: 0.15rem 0.4rem !important;
 }
 
-.threshold-note {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.68rem;
-    color: #444;
+.gr-markdown pre {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.74rem !important;
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--text-secondary) !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 1rem !important;
+}
+
+/* ── Stat Cards (Info Tab) ───────────────────────────── */
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.5rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+.stat-card .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.stat-card .stat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
     letter-spacing: 0.08em;
-    margin: 0.3rem 0 1rem 0;
 }
 
-.divider {
-    border: none;
-    border-top: 1px solid #1e1e1e;
-    margin: 1rem 0;
+/* ── Pipeline Badge ──────────────────────────────────── */
+.pipeline-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 0.35rem 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    margin: 0.2rem;
+}
+
+.pipeline-step .step-icon {
+    font-size: 0.85rem;
+}
+
+/* ── Status indicator ────────────────────────────────── */
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 6px;
+    animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+}
+
+/* ── Delete zone ─────────────────────────────────────── */
+.danger-zone {
+    background: rgba(239, 68, 68, 0.04);
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.5rem;
+    margin-top: 1rem;
+}
+
+.danger-zone-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--danger);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+}
+
+/* ── Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb {
+    background: var(--border-default);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ── Smooth global transitions ───────────────────────── */
+*, *::before, *::after {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 """
 
 # ── Interface ─────────────────────────────────────────────────────────────────
-with gr.Blocks(title="Tiger Identification") as demo:
+with gr.Blocks(title="WildID \u2014 Tiger Identification") as demo:
 
+    # ── Hero Header ──────────────────────────────────────────────────────────
     gr.HTML("""
-    <div class="header-block">
-        <h1>Tiger Individual Identification System</h1>
+    <div class="hero-header">
+        <div class="logo-icon">\U0001F42F</div>
+        <h1>WildID</h1>
+        <div class="subtitle">AI-Powered Individual Tiger Identification System</div>
+        <div class="accent-line"></div>
     </div>
     """)
 
-    # ── Setup ─────────────────────────────────────────────────────────────────
-    with gr.Tab("Setup"):
-        gr.Markdown("#### Database")
+    # ── Setup ────────────────────────────────────────────────────────────────
+    with gr.Tab("\u2699\ufe0f Setup"):
+        gr.HTML("""
+        <div class="info-note">
+            <span class="status-dot"></span>
+            Load an existing reference database or build a new one from images in <code>data/reference/</code>
+        </div>
+        """)
+
+        gr.Markdown("#### Reference Database")
 
         with gr.Row():
-            load_btn  = gr.Button("Load Existing Database",      variant="primary")
-            build_btn = gr.Button("Build Database from Images",  variant="secondary")
+            load_btn  = gr.Button("\u26a1 Load Existing Database",     variant="primary")
+            build_btn = gr.Button("\U0001F527 Build Database from Images", variant="secondary")
 
-        gr.HTML('<hr class="divider">')
         setup_output = gr.Textbox(label="Status", lines=14)
 
         load_btn.click(fn=load_existing_database, outputs=setup_output)
-
-        # build_reference_database is a generator — Gradio streams each yield
-        # into setup_output automatically
         build_btn.click(fn=build_reference_database, outputs=setup_output)
 
         gr.HTML('<hr class="divider">')
-        gr.HTML('<p class="threshold-note">Delete a tiger — removes from live database, pkl, and reference folder</p>')
+
+        gr.HTML("""
+        <div class="danger-zone">
+            <div class="danger-zone-label">\u26a0 Danger Zone</div>
+            <p style="font-size: 0.78rem; color: #a1a1aa; margin: 0;">
+                Permanently remove a tiger from the live database, .pkl file, and reference folder.
+            </p>
+        </div>
+        """)
         with gr.Row():
             delete_name_input = gr.Textbox(
                 label="Tiger Name / ID to Delete",
                 placeholder="e.g.  tiger_030",
                 scale=3
             )
-            delete_btn = gr.Button("Delete Tiger", variant="secondary", scale=1)
-        delete_output = gr.Textbox(label="", lines=6, show_label=False)
+            delete_btn = gr.Button("\U0001F5D1 Delete Tiger", variant="secondary", scale=1)
+        delete_output = gr.Textbox(label="", lines=5, show_label=False)
 
         delete_btn.click(
             fn=delete_tiger,
@@ -783,35 +1033,52 @@ with gr.Blocks(title="Tiger Identification") as demo:
             outputs=delete_output
         )
 
-    # ── Identify ──────────────────────────────────────────────────────────────
-    with gr.Tab("🔍 Identify"):
-        gr.Markdown("#### Single Image Identification")
-        gr.HTML(
-            f'<p class="threshold-note">Similarity threshold: {THRESHOLD:.0%}'
-            f' &nbsp;·&nbsp; Scores below this are flagged as new tiger</p>'
-        )
+    # ── Identify ─────────────────────────────────────────────────────────────
+    with gr.Tab("\U0001F50D Identify"):
+        gr.HTML(f"""
+        <div class="info-note">
+            <span class="status-dot"></span>
+            Upload a tiger image for individual identification &nbsp;\u00b7&nbsp;
+            Similarity threshold: <strong>{THRESHOLD:.0%}</strong> &nbsp;\u00b7&nbsp;
+            Two-stage pipeline: Species Check \u2192 Pattern Match
+        </div>
+        """)
 
+        gr.HTML("""
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+            <span class="pipeline-step"><span class="step-icon">\U0001F9EC</span> MobileNetV3 Species Filter</span>
+            <span class="pipeline-step"><span class="step-icon">\U0001F9E0</span> ViT-Base Embedding</span>
+            <span class="pipeline-step"><span class="step-icon">\U0001F3AF</span> Cosine Similarity</span>
+        </div>
+        """)
+
+        gr.Markdown("#### Upload & Identify")
         with gr.Row():
             with gr.Column(scale=1):
                 input_image  = gr.Image(label="Query Image", type="pil")
-                identify_btn = gr.Button("Identify", variant="primary")
+                identify_btn = gr.Button("\U0001F50D Identify Tiger", variant="primary")
             with gr.Column(scale=1):
-                output_text  = gr.Textbox(label="Result", lines=14)
+                output_text  = gr.Textbox(label="Identification Result", lines=14)
                 output_image = gr.Image(visible=False)
 
         gr.HTML('<hr class="divider">')
-        gr.HTML('<p class="threshold-note">New tiger detected? Name it and add to database</p>')
+
+        gr.HTML("""
+        <div class="info-note" style="border-left-color: #22c55e; background: rgba(34, 197, 94, 0.05);">
+            New tiger detected? Name it and add it to the reference database below.
+        </div>
+        """)
         with gr.Row():
             tiger_name_input = gr.Textbox(
                 label="Tiger Name / ID",
                 placeholder="e.g.  tiger_275",
                 scale=3
             )
-            add_btn = gr.Button("Add New Tiger to Database", variant="secondary", scale=1)
+            add_btn = gr.Button("\u2795 Add to Database", variant="secondary", scale=1)
         add_status = gr.Textbox(label="", lines=2, show_label=False)
 
         gr.HTML('<hr class="divider">')
-        gr.Markdown("#### Reference images of matched individual")
+        gr.Markdown("#### Reference Images of Matched Individual")
         reference_gallery = gr.Gallery(label="Reference images", columns=4, height="auto")
 
         identify_btn.click(
@@ -826,15 +1093,27 @@ with gr.Blocks(title="Tiger Identification") as demo:
             outputs=add_status
         )
 
-    # ── Webcam ─────────────────────────────────────────────────────────────────
-    with gr.Tab("📷 Webcam"):
-        gr.Markdown("#### Live Webcam Identification")
-        gr.HTML(
-            f'<p class="threshold-note">Webcam threshold: {WEBCAM_THRESHOLD:.0%}'
-            f' &nbsp;·&nbsp; Lower than image upload to account for screen artifacts'
-            f' &nbsp;·&nbsp; Preprocessing + multi-crop enabled</p>'
-        )
+    # ── Webcam ───────────────────────────────────────────────────────────────
+    with gr.Tab("\U0001F4F7 Webcam"):
+        gr.HTML(f"""
+        <div class="info-note">
+            <span class="status-dot"></span>
+            Live webcam identification &nbsp;\u00b7&nbsp;
+            Threshold: <strong>{WEBCAM_THRESHOLD:.0%}</strong> &nbsp;\u00b7&nbsp;
+            Preprocessing + Multi-crop enabled for phone screen captures
+        </div>
+        """)
 
+        gr.HTML("""
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+            <span class="pipeline-step"><span class="step-icon">\U0001F4F8</span> Webcam Capture</span>
+            <span class="pipeline-step"><span class="step-icon">\u2728</span> Preprocessing</span>
+            <span class="pipeline-step"><span class="step-icon">\U0001F42F</span> Tiger Detection</span>
+            <span class="pipeline-step"><span class="step-icon">\U0001F3AF</span> ID Matching</span>
+        </div>
+        """)
+
+        gr.Markdown("#### Capture & Identify")
         with gr.Row():
             with gr.Column(scale=1):
                 webcam_input = gr.Image(
@@ -842,13 +1121,13 @@ with gr.Blocks(title="Tiger Identification") as demo:
                     sources=["webcam"],
                     type="numpy"
                 )
-                webcam_btn = gr.Button("Identify from Webcam", variant="primary")
+                webcam_btn = gr.Button("\U0001F4F7 Identify from Webcam", variant="primary")
             with gr.Column(scale=1):
-                webcam_result = gr.Textbox(label="Result", lines=14)
+                webcam_result = gr.Textbox(label="Identification Result", lines=14)
                 webcam_processed = gr.Image(label="Processed Frame", visible=True)
 
         gr.HTML('<hr class="divider">')
-        gr.Markdown("#### Reference images of matched individual")
+        gr.Markdown("#### Reference Images of Matched Individual")
         webcam_gallery = gr.Gallery(label="Reference images", columns=4, height="auto")
 
         webcam_btn.click(
@@ -857,40 +1136,78 @@ with gr.Blocks(title="Tiger Identification") as demo:
             outputs=[webcam_result, webcam_processed, webcam_gallery]
         )
 
-    # ── Batch ─────────────────────────────────────────────────────────────────
-    with gr.Tab("Batch"):
+    # ── Batch ────────────────────────────────────────────────────────────────
+    with gr.Tab("\U0001F4CA Batch"):
+        gr.HTML("""
+        <div class="info-note">
+            <span class="status-dot"></span>
+            Process all images in <code>data/test/</code> against the reference database in one pass.
+        </div>
+        """)
         gr.Markdown("#### Batch Identification")
-        gr.Markdown("Processes all images in `data/test/` against the reference database.")
-        batch_btn    = gr.Button("Run Batch", variant="primary")
+        batch_btn    = gr.Button("\u25b6 Run Batch Analysis", variant="primary")
         batch_output = gr.Textbox(label="Batch Results", lines=22)
         batch_btn.click(fn=batch_identify, outputs=batch_output)
 
     # ── Info ──────────────────────────────────────────────────────────────────
-    with gr.Tab("ℹ️ Info"):
+    with gr.Tab("\U0001F4D6 Info"):
+        gr.HTML("""
+        <div style="text-align: center; padding: 1.5rem 0 0.5rem 0;">
+            <span style="font-size: 2.2rem;">\U0001F42F</span>
+            <h2 style="font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;
+                       font-weight: 600; color: #fafafa; margin: 0.4rem 0 0.2rem 0;
+                       letter-spacing: 0.06em; text-transform: uppercase;">
+                How WildID Works
+            </h2>
+            <p style="font-size: 0.8rem; color: #71717a;">
+                Deep learning pipeline for individual tiger identification via stripe pattern matching
+            </p>
+        </div>
+        """)
+
+        gr.HTML("""
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+                    margin: 1.2rem 0;">
+            <div class="stat-card">
+                <span class="stat-value">ViT-B/16</span>
+                <span class="stat-label">Backbone</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">128-D</span>
+                <span class="stat-label">Embedding</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">96%</span>
+                <span class="stat-label">Threshold</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">33</span>
+                <span class="stat-label">Ref. Tigers</span>
+            </div>
+        </div>
+        """)
+
         gr.Markdown("""
-#### About
-
-This system identifies individual tigers by matching stripe patterns using deep learning embeddings.
-
 #### Method
 
-- **Backbone** — ViT-Base (vit_base_patch16_224), last 4 blocks fine-tuned
-- **Training** — Triplet loss on 74 tiger identities (70% split, seed 42)
-- **Embedding** — 128-dimensional, L2 normalized
-- **Matching** — Cosine similarity against reference database
-- **Reference DB** — 33 holdout tigers (never seen during training)
-- **Threshold** — 0.96 (scores below this → New Tiger Detected)
+- **Backbone** \u2014 ViT-Base (`vit_base_patch16_224`), last 4 transformer blocks fine-tuned
+- **Training** \u2014 Triplet loss on 74 tiger identities (70/30 split, seed 42)
+- **Embedding** \u2014 128-dimensional, L2 normalized feature vector
+- **Matching** \u2014 Cosine similarity against reference database
+- **Species Filter** \u2014 MobileNetV3 pre-check rejects non-tiger inputs
+- **Webcam Pipeline** \u2014 Contrast/sharpness enhancement + median denoise + multi-crop TTA
 
 #### Dataset Structure
 
 ```
 data/
-├── reference/             ← 33 holdout tigers (known identities)
-├── fine_tuned_tigers/     ← 74 training tigers (not used at inference)
-└── test/                  ← query images
+\u251c\u2500\u2500 reference/             \u2190 33 holdout tigers (known identities)
+\u251c\u2500\u2500 fine_tuned_tigers/     \u2190 74 training tigers (not used at inference)
+\u2514\u2500\u2500 test/                  \u2190 query images
 ```
         """)
 
 if __name__ == "__main__":
     initialize_system()
-    demo.launch(share=False, server_name="127.0.0.1", server_port=7862, css=css)
+    demo.launch(share=False, server_name="127.0.0.1", server_port=7863, css=css)
+
