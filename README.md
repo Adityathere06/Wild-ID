@@ -104,25 +104,6 @@ Potential Individual Match / Unknown
 | Initial learning rate | 0.0001 |
 | Learning rate scheduler | CosineAnnealingLR |
 
-**Note:** These figures describe the recorded training configuration. Triplet loss alone does not establish real-world identification accuracy. A separate evaluation using held-out images and suitable identification metrics is required.
-
-## 🧪 Testing and Limitations
-
-The prototype provides image-based identification, webcam-based testing, reference-image comparison, and batch processing.
-
-Important challenges for further evaluation include:
-
-- Identifying the same individual across different viewing angles.
-- Handling changes in brightness, shadows, and image quality.
-- Avoiding false matches between visually similar individuals.
-- Correctly rejecting individuals that are not represented in the reference database.
-- Evaluating performance on unseen images and independent individuals.
-- Testing robustness using real-world wildlife camera-trap images.
-
-**Important:** Similarity scores are model outputs, not guaranteed probabilities that an identity is correct. The selected threshold requires validation against representative test data.
-
-WildID is currently a prototype and should not be treated as a field-validated wildlife identification system.
-
 ## 🌍 Future Scope
 
 Our vision is to extend WildID beyond tigers and explore individual re-identification for other wildlife species.
@@ -139,18 +120,6 @@ Potential future improvements include:
 ## 🎯 Project Objective
 
 WildID demonstrates how AI and computer vision can be applied to the challenge of individual tiger re-identification. The goal is to develop a more robust and scalable approach that may support wildlife research and conservation in the future.
-
-## 👥 Hackathon
-
-**Event:** WildHack 2026  
-**Problem Statement:** Re-Identifying Individual Wild Animals  
-**Project:** WildID — AI-Powered Individual Tiger Identification System
-
-Built as a team project to explore the intersection of artificial intelligence, computer vision, and wildlife conservation.
-
-## 📌 Disclaimer
-
-WildID is an experimental prototype developed for a hackathon. Its predictions and similarity scores require further validation before any use in operational wildlife monitoring or conservation decisions.
 
 ---
 
