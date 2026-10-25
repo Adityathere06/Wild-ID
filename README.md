@@ -1,9 +1,6 @@
 
 # Individual Identification of Tigers
 
-**Minor Project — Department of Electronics & Telecommunication**  
----
-
 ## Overview
 
 This system identifies individual tigers by their unique stripe patterns using image-based pattern embeddings. It fine-tunes a **Vision Transformer (ViT-Base)** with **Triplet Loss** to produce 128-dimensional embeddings per tiger image, then compares query embeddings against a reference database using **cosine similarity**.
